@@ -1,8 +1,8 @@
 # SubCircle
 
-SubCircle is a decentralized subscription payment platform built on Arbitrum, enabling gasless USDC subscription payments using Account Abstraction and Circle's Paymaster.
+SubCircle is a decentralized subscription payment platform built on Arbitrum, enabling gasless USDC transfer and subscription payments using Account Abstraction and Circle's Paymaster.
 
-##  Features
+## Features
 
 - **Gasless Transactions**: Users don't need ETH for gas fees
 - **USDC Payments**: Stable and widely accepted payment method
@@ -10,16 +10,22 @@ SubCircle is a decentralized subscription payment platform built on Arbitrum, en
 - **Automated Payments**: Reliable subscription management
 - **User-Friendly Interface**: Simple and intuitive UI
 
-##  Tech Stack
+## Tech Stack
 
 - **Smart Contracts**: Solidity + Foundry
 - **Account Abstraction**: ERC-4337
-- **Frontend**: React + Tailwind CSS
 - **Backend**: Node.js + Express
 - **Blockchain**: Arbitrum Sepolia
 - **Token**: Circle USDC
 
-##  Quick Start
+## Prerequisites
+
+- Node.js (v16 or higher)
+- npm (v7 or higher)
+- Foundry (forge, anvil, cast)
+- MetaMask or compatible Web3 wallet
+
+## Quick Start
 
 1. Clone the repository:
 ```bash
@@ -29,16 +35,7 @@ cd subcircle
 
 2. Install dependencies:
 ```bash
-# Install backend dependencies
-npm install
-
-# Install frontend dependencies
-cd frontend
-npm install
-cd ..
-
-# Install Foundry dependencies
-forge install
+make install
 ```
 
 3. Set up environment variables:
@@ -47,14 +44,29 @@ cp .env.example .env
 # Edit .env with your configuration
 ```
 
-4. Start the development servers:
+4. Deploy smart contracts:
 ```bash
-# Start backend server
-npm start
+make deploy
+```
 
-# Start frontend development server
-cd frontend
-npm start
+## Available Commands
+
+- `make install` - Install all dependencies
+- `make test` - Run all tests
+- `make clean` - Clean build artifacts
+- `make deploy` - Deploy smart contracts
+- `make help` - Show this help message
+
+## Project Structure
+
+```
+subcircle/
+├── src/              # Smart contract source files
+├── script/           # Deployment scripts
+├── test/             # Test files
+├── node/             # Backend scripts and utilities
+├── .env.example      # Environment variables template
+└── Makefile          # Project automation
 ```
 
 ## Smart Contracts
@@ -62,22 +74,26 @@ npm start
 - **Subscription.sol**: Main contract handling subscription logic
 - Deployed on Arbitrum Sepolia: `0x3Fe0bDf6f50b5506D583b93d2aCb3456Bd0267a3`
 
-##  Testing
+## Testing
 
 ```bash
+# Run all tests
+make test
+
 # Run contract tests
-forge test
+make test-contracts
 
 # Run backend tests
-npm test
+make test-backend
 ```
 
-##  Security
+## Security
 
-- Smart contract audited by [Pending]
-- Uses OpenZeppelin contracts
-- Implements permit2 for gasless approvals
-
+- **Smart Contract Security**:
+  - Uses OpenZeppelin contracts for battle-tested implementations
+  - Implements permit2 for gasless approvals
+  - Follows best practices for secure smart contract development
+  - Note: Smart contracts are currently unaudited. Use at your own risk.
 
 ## License
 

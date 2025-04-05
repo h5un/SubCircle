@@ -1,93 +1,35 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.18;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {AutomationCompatibleInterface} from "@chainlink/contracts/src/v0.8/interfaces/AutomationCompatibleInterface.sol";
 
-contract Subscription is Ownable {
-    struct SubscriptionPlan {
-        address subscriber;
-        address recipient;
-        uint256 amount;
-        uint256 frequency; // in seconds
-        uint256 lastPayment;
-        bool isActive;
+contract Subscription is AutomationCompatibleInterface {
+    address public immutable i_owner;
+    uint256 public s_lastTimeStamp;
+    uint256 public immutable i_interval;
+
+    // Events
+    event Ping();
+
+    constructor (uint256 interval) {
+        i_owner = msg.sender;
+        s_lastTimeStamp = block.timestamp;
+        i_interval = interval;
     }
 
-    mapping(address => SubscriptionPlan) public subscriptions;
-    IERC20 public usdc;
-
-    event SubscriptionCreated(
-        address indexed subscriber,
-        address indexed recipient,
-        uint256 amount,
-        uint256 frequency
-    );
-    event SubscriptionCancelled(address indexed subscriber);
-    event PaymentExecuted(
-        address indexed subscriber,
-        address indexed recipient,
-        uint256 amount
-    );
-
-    constructor(address _usdc) Ownable(msg.sender) {
-        usdc = IERC20(_usdc);
+    // Automation functions
+    function checkUpkeep(bytes calldata /* checkData */) external view returns (bool upkeepNeeded, bytes memory /* performData */) {
+        upkeepNeeded = (block.timestamp >= s_lastTimeStamp + i_interval);
+        return (upkeepNeeded, "");
     }
 
-    function createSubscription(
-        address recipient,
-        uint256 amount,
-        uint256 frequency
-    ) external {
-        require(recipient != address(0), "Invalid recipient");
-        require(amount > 0, "Amount must be greater than 0");
-        require(frequency >= 1 days, "Frequency must be at least 1 day");
-        require(
-            subscriptions[msg.sender].subscriber == address(0),
-            "Subscription already exists"
-        );
-
-        subscriptions[msg.sender] = SubscriptionPlan({
-            subscriber: msg.sender,
-            recipient: recipient,
-            amount: amount,
-            frequency: frequency,
-            lastPayment: block.timestamp,
-            isActive: true
-        });
-
-        emit SubscriptionCreated(msg.sender, recipient, amount, frequency);
+    function performUpkeep(bytes calldata /* performData */) external override {
+        if ((block.timestamp - s_lastTimeStamp) < i_interval) {
+            revert("Subscription period has not elapsed");
+        }
+        s_lastTimeStamp = block.timestamp;
+        // Perform subscription logic here
+        // 
+        emit Ping();
     }
-
-    function cancelSubscription() external {
-        require(
-            subscriptions[msg.sender].subscriber == msg.sender,
-            "No active subscription"
-        );
-        subscriptions[msg.sender].isActive = false;
-        emit SubscriptionCancelled(msg.sender);
-    }
-
-    function executePayment(address subscriber) external {
-        SubscriptionPlan storage plan = subscriptions[subscriber];
-        require(plan.isActive, "Subscription is not active");
-        require(
-            block.timestamp >= plan.lastPayment + plan.frequency,
-            "Payment not due yet"
-        );
-
-        require(
-            usdc.transferFrom(subscriber, plan.recipient, plan.amount),
-            "Transfer failed"
-        );
-
-        plan.lastPayment = block.timestamp;
-        emit PaymentExecuted(subscriber, plan.recipient, plan.amount);
-    }
-
-    function getSubscription(
-        address subscriber
-    ) external view returns (SubscriptionPlan memory) {
-        return subscriptions[subscriber];
-    }
-} 
+}

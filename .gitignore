@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
 /frontend/node_modules/
-/lib/
+lib/
 /lib-legacy/
 
 # Foundry
@@ -21,7 +21,7 @@ forge-cache/
 
 # Build files
 /build
-/frontend/build
+frontend/
 /dist
 /out
 /cache
@@ -70,3 +70,6 @@ artifacts/
 .local/
 .history/
 
+node/.owner_private_key
+
+lib/
