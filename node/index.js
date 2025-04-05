@@ -80,7 +80,7 @@ if (usdcBalance === 0n) {
 }
 
 // Connect to the contract 
-const SUBSCRIPTION_CONTRACT = ''; // TO-FILL
+const SUBSCRIPTION_CONTRACT = '0x9D0B6961A18Eef1E4F2741c1f09d50937242cDA7'; // The Timer
 const subscriptionContract = getContract({
   client,
   address: SUBSCRIPTION_CONTRACT,
@@ -250,9 +250,10 @@ async function triggerPerformUpkeep() {
     to: subscriptionContract.address,
     abi: subscriptionContract.abi,
     functionName: 'performUpkeep',
-    args: [], // 根據合約定義無參數
+    args: ['0x'], // 根據合約定義無參數
   }]
 
+  console.log("PerformUpkeep Triggered.")
   // 下面這段邏輯複製你原本的 userOp 建構、permit 簽名、sendUserOperation 的流程即可
   // 包括 permit、paymasterData、estimate gas、send user op...
   const recipient = subscriptionContract.address
