@@ -1,8 +1,8 @@
 # SubCircle
 
-SubCircle is a decentralized subscription payment platform built on Arbitrum, enabling gasless USDC subscription payments using Account Abstraction and Circle's USDC.
+SubCircle is a decentralized subscription payment platform built on Arbitrum, enabling gasless USDC subscription payments using Account Abstraction and Circle's Paymaster.
 
-## 🌟 Features
+##  Features
 
 - **Gasless Transactions**: Users don't need ETH for gas fees
 - **USDC Payments**: Stable and widely accepted payment method
@@ -10,7 +10,7 @@ SubCircle is a decentralized subscription payment platform built on Arbitrum, en
 - **Automated Payments**: Reliable subscription management
 - **User-Friendly Interface**: Simple and intuitive UI
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 - **Smart Contracts**: Solidity + Foundry
 - **Account Abstraction**: ERC-4337
@@ -19,7 +19,7 @@ SubCircle is a decentralized subscription payment platform built on Arbitrum, en
 - **Blockchain**: Arbitrum Sepolia
 - **Token**: Circle USDC
 
-## 🚀 Quick Start
+##  Quick Start
 
 1. Clone the repository:
 ```bash
@@ -57,12 +57,12 @@ cd frontend
 npm start
 ```
 
-## 📝 Smart Contracts
+## Smart Contracts
 
 - **Subscription.sol**: Main contract handling subscription logic
 - Deployed on Arbitrum Sepolia: `0x3Fe0bDf6f50b5506D583b93d2aCb3456Bd0267a3`
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Run contract tests
@@ -72,20 +72,17 @@ forge test
 npm test
 ```
 
-## 🔒 Security
+##  Security
 
 - Smart contract audited by [Pending]
 - Uses OpenZeppelin contracts
 - Implements permit2 for gasless approvals
 
-## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## License
 
-## 📄 License
+MIT
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## ETH Taipei Hackathon 2025
 
-## 🏆 ETH Taipei Hackathon 2024
-
-This project was built during ETH Taipei Hackathon 2024. It aims to solve the problem of recurring payments in web3 by leveraging Account Abstraction and Circle's USDC. 
+This project was built during ETH Taipei Hackathon 2025. It aims to solve the recurring payment challenges in web3 by enabling gasless USDC subscriptions through Account Abstraction and Circle's Paymaster.
