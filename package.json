@@ -1,0 +1,27 @@
+{
+  "name": "circle-uscd-paymaster",
+  "version": "1.0.0",
+  "description": "Circle USDC Paymaster with Subscription Support",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js",
+    "scheduler": "node scheduler.js",
+    "test": "mocha test/**/*.test.js",
+    "test:watch": "mocha --watch test/**/*.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "permissionless": "^0.2.39",
+    "viem": "^2.25.0"
+  },
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "mocha": "^10.2.0",
+    "sinon": "^20.0.0"
+  }
+}
